@@ -1,29 +1,18 @@
-# Use a lighter version of Node as a parent image
-FROM node as web
-# Set the working directory to /client
-WORKDIR /userlist
-# copy package.json into the container at /client
-COPY package*.json /userlist/
-# install dependencies
-RUN npm install
-
-RUN npm install react-scripts -g --silent
-
-# Copy the current directory contents into the container at /client
+FROM node AS builder
+# Set working directory
+WORKDIR /app
+# Copy all files from current directory to working dir in image
 COPY . .
+# install node modules and build assets
+RUN yarn install && yarn build
 
-# build production instance
-RUN yarn build
-
-# build nginx server
-FROM nginx
-
-# Make port 80 available to the world outside this container
-EXPOSE 80
-
-COPY from web /userlist/build/ /var/www/html
-
-COPY nginx/default.conf /etc/nginx/conf.d
-
-# Run the app when the container launches
-CMD ["nginx", "-g", "daemon off"]
+# nginx state for serving content
+FROM nginx:alpine
+# Set working directory to nginx asset directory
+WORKDIR /usr/share/nginx/html
+# Remove default nginx static assets
+RUN rm -rf ./*
+# Copy static assets from builder stage
+COPY --from=builder /app/build .
+# Containers run nginx with global directives and daemon off
+ENTRYPOINT ["nginx", "-g", "daemon off;"]
