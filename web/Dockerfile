@@ -10,7 +10,7 @@ RUN npm install
 COPY . /userlist/
 
 # build production instance
-RUN npm build
+RUN npm run build
 
 # build nginx server
 FROM nginx
