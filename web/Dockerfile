@@ -10,10 +10,10 @@ RUN npm install
 RUN npm install react-scripts -g --silent
 
 # Copy the current directory contents into the container at /client
-COPY . /userlist/
+COPY ..
 
 # build production instance
-RUN npm run build
+RUN yarn build
 
 # build nginx server
 FROM nginx
