@@ -21,7 +21,7 @@ FROM nginx
 # Make port 80 available to the world outside this container
 EXPOSE 80
 
-COPY from web/userlist/build/ /var/www/html
+COPY from web /userlist/build/ /var/www/html
 
 COPY nginx/default.conf /etc/nginx/conf.d
 
