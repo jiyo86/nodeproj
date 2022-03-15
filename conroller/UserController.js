@@ -3,8 +3,6 @@ const userModel = require("../model");
 
 mongoose.connect("mongodb://db:27017/usersdb", {
   useNewUrlParser: true,
-  useFindAndModify: false,
-  useUnifiedTopology: true,
 });
 
 const db = mongoose.connection;
@@ -12,7 +10,7 @@ db.on("error", console.error.bind(console, "connection error"));
 db.once("open", function () {
   console.log("Connected Successfully");
 });
-exports.userlist = async (req, resp, next) => {
+const userlist = async (req, resp, next) => {
   try {
     const users = await userModel.find({});
     resp.send(users);
@@ -21,7 +19,7 @@ exports.userlist = async (req, resp, next) => {
   }
 };
 
-exports.adduser = async (req, resp, next) => {
+const adduser = async (req, resp, next) => {
   const user = new userModel(req.body);
   try {
     await user.save();
@@ -29,4 +27,9 @@ exports.adduser = async (req, resp, next) => {
   } catch (error) {
     resp.status(500).send(error);
   }
+};
+
+module.exports = {
+  adduser,
+  userlist,
 };

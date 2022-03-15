@@ -2,8 +2,11 @@ const express = require("express");
 const router = express.Router();
 
 const users = require("../conroller/UserController");
-
-router.get("/userlist", users.getUserlist);
-router.post("/adduser", users.addUser);
+router.use((req, res, next) => {
+  console.log("Time: ", Date.now());
+  next();
+});
+router.get("/userlist", users.userlist);
+router.post("/adduser", users.adduser);
 
 module.exports = router;
