@@ -2,11 +2,15 @@ const express = require("express");
 const cookie_parser = require("cookie-parser");
 const cors = require("cors");
 const users = require("./routes/users");
+const bodyParser = require("body-parser");
 
 const app = express();
 app.use(cors());
 app.use(cookie_parser());
 app.use(express.json());
+//Here we are configuring express to use body-parser as middle-ware.
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 app.use("/", users);
 
 app.use((req, res, next) => {

@@ -20,6 +20,7 @@ const userlist = async (req, resp, next) => {
 };
 
 const adduser = async (req, resp, next) => {
+  console.log(req);
   const user = new userModel(req.body);
   try {
     await user.save();
