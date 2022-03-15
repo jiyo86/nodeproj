@@ -1,5 +1,5 @@
 # Use a lighter version of Node as a parent image
-FROM node: alpine as web
+FROM node as web
 # Set the working directory to /client
 WORKDIR /userlist
 # copy package.json into the container at /client
