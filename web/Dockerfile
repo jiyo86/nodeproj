@@ -10,7 +10,7 @@ RUN npm install
 RUN npm install react-scripts -g --silent
 
 # Copy the current directory contents into the container at /client
-COPY . /userlist
+COPY . .
 
 # build production instance
 RUN yarn build
