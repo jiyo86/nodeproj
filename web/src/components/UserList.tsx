@@ -1,14 +1,21 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { fetchUserList } from "../redux/userAction";
 
 export const UserList = () => {
-  const [userList, setUserList] = useState([
+  const dispatch = useDispatch();
+  const userList = useSelector((state) => state.user);
+  /*const [userList, setUserList] = useState([
     {
       fname: "Jiyo",
       lname: "Mathew",
       email: "jiyo@jiyo.com",
     },
-  ]);
+  ]);*/
+  useEffect(() => {
+    dispatch(fetchUserList());
+  }, [userList]);
 
   return (
     <>
